@@ -1,8 +1,8 @@
 {
     "name": "Lab8-Starter",
     "short_name": "Kevin",
-    "description": "",
-    "start_url": "index.html",
+    "description": "Webapp",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "black",
     "theme_color": "blue",
