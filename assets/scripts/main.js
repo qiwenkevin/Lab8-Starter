@@ -68,6 +68,12 @@ async function getRecipes() {
   // EXPOSE - START (All expose numbers start with A)
   // A1. TODO - Check local storage to see if there are any recipes.
   //            If there are recipes, return them.
+
+  let recipies = JSON.parse(localStorage.getItem('recipes'));
+  if (recipies !== null) {
+    return recipies;
+  }
+
   /**************************/
   // The rest of this method will be concerned with requesting the recipes
   // from the network
@@ -100,6 +106,25 @@ async function getRecipes() {
   //            resolve() method.
   // A10. TODO - Log any errors from catch using console.error
   // A11. TODO - Pass any errors to the Promise's reject() function
+  recipes = [];
+  return new Promise((resolve, reject) => {
+    for (let url of RECIPE_URLS) {
+      try {
+        fetch(url)
+          .then(response => response.json())
+          .then(recipe => {
+            recipes.push(recipe);
+            if (recipes.length === RECIPE_URLS.length) {
+              saveRecipesToStorage(recipes);
+              resolve(recipes);
+            }
+          });
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    }
+  });
 }
 
 /**
